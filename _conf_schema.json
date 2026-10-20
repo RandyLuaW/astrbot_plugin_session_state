@@ -87,7 +87,7 @@
   },
   "keyword_list": {
     "type": "list",
-    "default": ["肥鱼", "大肥鲸", "🐳", "哦鲸鲸"],
+    "default": [],
     "description": "触发关键词列表。"
   },
   "skip_when_talking_to_others": {

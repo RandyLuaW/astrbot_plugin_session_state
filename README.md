@@ -85,7 +85,7 @@ git clone https://github.com/RandyLuaW/astrbot_plugin_session_state.git
 | `activity_gain` | float | `0.5` | 调制幅度：活跃度 0 时 ×1.5、1 时 ×0.5 |
 | `activity_window` | int | `300` | 活跃度统计窗口（秒） |
 | `enter_on_keyword` | bool | `true` | 命中关键词直接进入 |
-| `keyword_list` | list | `["肥鱼","大肥鲸","🐳","哦鲸鲸"]` | 触发关键词 |
+| `keyword_list` | list | `[]` | 触发关键词，填你们群里的称呼（不预置任何默认值） |
 | `skip_when_talking_to_others` | bool | `true` | @ 别人/引用别人时不插话 |
 | `min_message_len` | int | `2` | 过短消息不接（纯图不受限） |
 

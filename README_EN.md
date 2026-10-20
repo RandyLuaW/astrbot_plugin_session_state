@@ -85,7 +85,7 @@ No extra dependencies.
 | `activity_gain` | float | `0.5` | Modulation strength |
 | `activity_window` | int | `300` | Liveliness window in seconds |
 | `enter_on_keyword` | bool | `true` | Keywords enter directly |
-| `keyword_list` | list | `["肥鱼","大肥鲸","🐳","哦鲸鲸"]` | Trigger keywords |
+| `keyword_list` | list | `[]` | Trigger keywords; set your own (no defaults shipped) |
 | `skip_when_talking_to_others` | bool | `true` | Don't interrupt @s / quotes |
 | `min_message_len` | int | `2` | Skip too-short messages (images exempt) |
 

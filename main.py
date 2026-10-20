@@ -82,7 +82,7 @@ DEFAULT_CONFIG: dict = {
     "follow_probability": 0.85,
     "follow_window": 180,
     "enter_on_keyword": True,
-    "keyword_list": ["肥鱼", "大肥鲸", "🐳", "哦鲸鲸"],
+    "keyword_list": [],
     "skip_when_talking_to_others": True,
     "reread_filter": True,
     "min_message_len": 2,

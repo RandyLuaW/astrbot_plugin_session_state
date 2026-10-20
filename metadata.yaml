@@ -4,7 +4,7 @@ desc: "给群聊加一层节奏：观望/活跃双状态，接上话才进入活
 short_desc: 观望/活跃双状态 + 冷场退场 + 活跃上限 + 限流
 author: Randy Lua
 repo: https://github.com/RandyLuaW/astrbot_plugin_session_state
-version: 1.0.0
+version: 1.0.1
 astrbot_version: ">=4.17.0"
 support_platforms:
   - aiocqhttp
