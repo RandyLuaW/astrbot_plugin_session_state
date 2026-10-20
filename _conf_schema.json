@@ -1,0 +1,128 @@
+{
+  "enable": {
+    "type": "bool",
+    "default": true,
+    "description": "总开关。关闭后只记录状态，不参与任何判定。"
+  },
+  "dry_run": {
+    "type": "bool",
+    "default": false,
+    "description": "演练模式：完整跑判定逻辑并打日志，但绝不真正发送。调参时强烈建议先开几天看日志。"
+  },
+  "coexist_mode": {
+    "type": "string",
+    "default": "auto",
+    "description": "与 active_reply_ctl 的关系。auto=检测到它在运行就自动降级为纯观察（推荐）；on=强制降级；off=强制接管（此时务必关闭 active_reply_ctl，否则两者抢决策权）。",
+    "options": ["auto", "on", "off"]
+  },
+  "quiet_hours": {
+    "type": "list",
+    "default": [],
+    "description": "免打扰时段，格式如 23:00-08:00，可填多条，支持跨零点。该时段内不主动接话（被点名不受影响）。"
+  },
+  "active_max_duration": {
+    "type": "float",
+    "default": 300,
+    "description": "活跃态最长持续秒数。到点强制退场回观望——这是治「黏着不走」的关键刹车。"
+  },
+  "cold_exit_seconds": {
+    "type": "float",
+    "default": 90,
+    "description": "冷场退场：群里连续这么久没人说话，就认为话题结束，主动退场。设 0 关闭。"
+  },
+  "max_bot_turns": {
+    "type": "int",
+    "default": 6,
+    "description": "活跃态内最多连续发言轮数。说满了就主动收尾退场，避免一个人唱独角戏。设 0 不限制。"
+  },
+  "enter_cooldown": {
+    "type": "float",
+    "default": 600,
+    "description": "两次进入活跃态之间的最小间隔（秒）。被点名不受此限制。"
+  },
+  "max_enters_per_hour": {
+    "type": "int",
+    "default": 3,
+    "description": "每小时最多主动进入活跃态几次（滚动 1 小时统计）。被点名不计入。"
+  },
+  "enter_probability": {
+    "type": "float",
+    "default": 0.02,
+    "description": "观望态下每条消息触发主动接话的基础概率。0.02 约等于 50 条里开口 1 次。"
+  },
+  "activity_modulation": {
+    "type": "bool",
+    "default": true,
+    "description": "按群活跃度调制进入概率：群冷清时更容易开口（避免冷场），群热闹时更克制（避免打扰别人聊天）。"
+  },
+  "activity_gain": {
+    "type": "float",
+    "default": 0.5,
+    "description": "活跃度调制幅度。0.5 表示活跃度为 0 时概率 ×1.5、活跃度为 1 时 ×0.5。设 0 等于不调制。"
+  },
+  "activity_window": {
+    "type": "int",
+    "default": 300,
+    "description": "计算活跃度的时间窗口（秒）。太短会抖，太长不灵敏，5 分钟通常合适。"
+  },
+  "follow_participants": {
+    "type": "bool",
+    "default": true,
+    "description": "活跃态内只跟随本轮已参与对话的人，不理会路过插话的人。"
+  },
+  "follow_probability": {
+    "type": "float",
+    "default": 0.85,
+    "description": "活跃态内跟随参与者消息的响应概率。留一点余量（不要长期设 1.0）才像真人。"
+  },
+  "follow_window": {
+    "type": "int",
+    "default": 180,
+    "description": "参与者的最后发言在这么久之内才视为仍在对话中（秒）。"
+  },
+  "enter_on_keyword": {
+    "type": "bool",
+    "default": true,
+    "description": "消息命中关键词时直接进入活跃态并接话（不受抽签概率限制，但仍受免打扰与限流约束）。"
+  },
+  "keyword_list": {
+    "type": "list",
+    "default": ["肥鱼", "大肥鲸", "🐳", "哦鲸鲸"],
+    "description": "触发关键词列表。"
+  },
+  "skip_when_talking_to_others": {
+    "type": "bool",
+    "default": true,
+    "description": "@ 了别人或引用了别人的消息时不插话。建议开启。"
+  },
+  "reread_filter": {
+    "type": "bool",
+    "default": true,
+    "description": "复读过滤：用户消息与 bot 最近发言去掉标点后完全一致时不响应。"
+  },
+  "min_message_len": {
+    "type": "int",
+    "default": 2,
+    "description": "过短的消息不值得接（纯图消息不受此限）。"
+  },
+  "skip_marker": {
+    "type": "string",
+    "default": "[SKIP]",
+    "description": "让模型在判断「这条不是对我说的」时只输出这个标记，插件会静默吞掉这条回复，群里无感。"
+  },
+  "prompt_template": {
+    "type": "text",
+    "default": "群里【{sender}】刚说：\n{message}\n\n当前群里正在聊天，你已经在场。结合上面的群聊记录判断：如果这句话是在跟别人说、与你无关，或群里在刷屏玩梗，就只回复 {marker} 一个词；否则以当前人设自然接一句，简短（一两句就够），不要客服腔、不要总结陈词。",
+    "description": "主动接话时的提示词。可用占位符：{sender} 发送者昵称、{message} 消息内容、{marker} 跳过标记。"
+  },
+  "follow_prompt_template": {
+    "type": "text",
+    "default": "【{sender}】接着刚才的对话又说：\n{message}\n\n如果这是在对你说，就以当前人设自然接住，简短；如果其实是在跟群里其他人说话，只回复 {marker} 一个词。",
+    "description": "跟随对话时的提示词。占位符同上。"
+  },
+  "debug": {
+    "type": "bool",
+    "default": false,
+    "description": "输出判定明细日志（每次进退场、命中原因）。"
+  }
+}

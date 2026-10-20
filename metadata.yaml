@@ -1,0 +1,16 @@
+name: astrbot_plugin_session_state
+display_name: 会话状态机
+desc: "给群聊加一层节奏：观望/活跃双状态，接上话才进入活跃，并靠四道刹车主动退场——活跃时长上限、冷场退场（群里安静 N 秒就收尾）、连续发言轮数上限、进入限流（间隔+每小时次数）。另按群活跃度调制开口概率（冷清时更主动、热闹时更克制），并过滤复读。与 active_reply_ctl 自动互斥，检测到它运行就降级为纯观察，不会抢占决策权。"
+short_desc: 观望/活跃双状态 + 冷场退场 + 活跃上限 + 限流
+author: Randy Lua
+repo: https://github.com/RandyLuaW/astrbot_plugin_session_state
+version: 1.0.0
+astrbot_version: ">=4.17.0"
+support_platforms:
+  - aiocqhttp
+tags:
+  - 群聊
+  - 节奏
+  - 状态机
+  - 主动回复
+  - 冷场
